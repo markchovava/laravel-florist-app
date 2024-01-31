@@ -12,10 +12,10 @@ class RoleController extends Controller
     
     public function index(Request $request){
         if(!empty($request->search)){
-            $data = Role::where('name', 'LIKE', '%' . $request->search . '%')
+            $data = Role::with(['user'])->where('name', 'LIKE', '%' . $request->search . '%')
                     ->paginate(15);
         } else{
-            $data = Role::orderBy('level', 'asc')
+            $data = Role::with(['user'])->orderBy('level', 'asc')
                     ->paginate(15);
         }
    

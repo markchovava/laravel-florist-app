@@ -18,12 +18,12 @@ class ProductController extends Controller
         if(!empty($request->search)){
             $data = Product::with(['user', 'categories'])
                 ->where('name', 'LIKE', '%' . $request->search . '%')
-                ->paginate(15);
+                ->paginate(12);
         } else {
             $data = Product::with(['user', 'categories'])
                 ->orderBy('updated_at','desc')
                 ->orderBy('name','asc')
-                ->paginate(15);
+                ->paginate(12);
         }
 
         return ProductResource::collection($data);

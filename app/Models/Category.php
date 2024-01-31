@@ -27,5 +27,11 @@ class Category extends Model
         return $this->belongsToMany(Product::class, 'product_categories', 'category_id', 'product_id')
             ->withTimestamps();
     }
+
+    public function productsPaginated(){
+        return $this->belongsToMany(Product::class, 'product_categories', 'category_id', 'product_id')
+                ->with('product')
+                ->paginated(12);
+    }
     
 }

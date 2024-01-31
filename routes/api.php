@@ -109,9 +109,11 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     });
 
     Route::prefix('order')->group(function() {
-        Route::get('/product', [OrderController::class, 'searchProductByName']);
-        Route::post('/', [OrderController::class, 'store']);
         Route::get('/', [OrderController::class, 'index']);
+        Route::get('/by-user', [OrderController::class, 'showByUserId']);
+        Route::post('/', [OrderController::class, 'store']);
+        Route::post('/all', [OrderController::class, 'storeAll']);
+        Route::get('/product', [OrderController::class, 'searchProductByName']);
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::post('/delivery/{id}', [OrderController::class, 'deliveryUpdate']);
         Route::delete('/{id}', [OrderController::class, 'delete']);

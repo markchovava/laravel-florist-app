@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +29,14 @@ class CategoryController extends Controller
         return CategoryResource::collection($data);
     }
 
+
+    public function indexAll() {
+        $data = Category::orderBy('priority','asc')
+                ->orderBy('name','asc')
+                ->get(); 
+        return CategoryResource::collection($data);
+    }
+
     public function indexOne(){
         $data = Category::with(['user', 'products'])
                 ->where('priority', 1)
@@ -34,18 +45,24 @@ class CategoryController extends Controller
         return new CategoryResource($data);
     }
 
-    public function indexTwo(){
-        $data = Category::with(['user', 'products'])
-                ->where('priority', 2)
-                ->first(); 
-    
-        return new CategoryResource($data);
+    public function indexPriorityTwo(){
+        $category = Category::with(['user', 'products'])->where('priority', 2)->first(); 
+        $productIds = ProductCategory::where('category_id', $category->id)->pluck('product_id');
+        $products = Product::whereIn('id', $productIds)->paginate(8);
+
+        return ProductResource::collection($products);
     }
 
 
     public function show($id){
-        $data = Category::with(['user'])->find($id);
+        $data = Category::with(['user', 'products'])->find($id);
         return new CategoryResource($data);
+    }
+
+    public function showCategoryProducts($id){
+        $productIds = ProductCategory::where('category_id',$id)->pluck('product_id');
+        $products = Product::whereIn('id', $productIds)->paginate(12);
+        return ProductResource::collection($products);
     }
 
     public function store(Request $request){

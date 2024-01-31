@@ -12,10 +12,15 @@ class AppInfo extends Model
     public $fillable = [
         'user_id',
         'name',
+        'description',
         'address',
         'phone',
         'email',
         'website',
+        'whatsapp', 
+        'facebook', 
+        'twitter', 
+        'instagram',
         'created_at',
         'updated_at',
     ];

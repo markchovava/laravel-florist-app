@@ -31,8 +31,8 @@ class CartController extends Controller
 
     /* ADD SINGLE ITEM */
     public function store(Request $request){
-        if(!empty($request->shopping_session)){
-            $cart = Cart::where('shopping_session', $request->shopping_session)->first();
+        $cart = Cart::where('shopping_session', $request->shopping_session)->first();
+        if(isset($cart)){
             $cart->product_option_quantity += $request->product_option_quantity;
             $cart->product_option_total += $request->product_option_total;
             $cart->product_quantity += $request->product_quantity;
@@ -123,8 +123,8 @@ class CartController extends Controller
     }
 
     public function storeAll(Request $request){
-        if(!empty($request->shopping_session)){
-            $cart = Cart::where('shopping_session', $request->shopping_session)->first();
+        $cart = Cart::where('shopping_session', $request->shopping_session)->first();
+        if(isset($cart)){
             $cart->product_option_quantity = $request->product_option_quantity;
             $cart->product_option_total = $request->product_option_total;
             $cart->product_quantity = $request->product_quantity;

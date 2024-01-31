@@ -23,10 +23,8 @@ use App\Http\Controllers\RoleController;
 */
 
 Route::get('/', function () {
-
     return view('welcome');
 });
-
 
 Route::prefix('app-info')->group(function() {
     Route::get('/', [AppInfoController::class, 'index']);
@@ -42,13 +40,13 @@ Route::prefix('product-category')->group(function() {
     Route::get('/{id}', [ProductCategoryController::class, 'show']);
 });
 
-
-
 Route::prefix('category')->group(function() {
     Route::get('/', [CategoryController::class, 'index']);
+    Route::get('/all', [CategoryController::class, 'indexAll']);
     Route::get('/one', [CategoryController::class, 'indexOne']);
-    Route::get('/two', [CategoryController::class, 'indexTwo']);
+    Route::get('/two', [CategoryController::class, 'indexPriorityTwo']);
     Route::get('/{id}', [CategoryController::class, 'show']);
+    Route::get('/products/{id}', [CategoryController::class, 'showCategoryProducts']);
 });
 
 Route::prefix('product')->group(function() {
@@ -71,9 +69,9 @@ Route::prefix('cart-item')->group(function() {
 
 Route::prefix('delivery')->group(function() {
     Route::get('/', [DeliveryController::class, 'index']);
+    Route::get('/all', [DeliveryController::class, 'indexAll']);
     Route::delete('/{id}', [DeliveryController::class, 'show']);
 });
-
 
 Route::prefix('product-option')->group(function() {
     Route::get('/', [ProductOptionController::class, 'index']);

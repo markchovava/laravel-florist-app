@@ -12,12 +12,14 @@ class Order extends Model
     public $fillable = [
         'user_id',
         'order_no',
-        'delivery_status',
         'product_option_quantity',
         'product_option_total',
         'product_quantity',
         'product_total',
         'grandtotal',
+        'delivery_status',
+        'delivery_name',
+        'delivery_price',
         'created_at',
         'updated_at',
     ];

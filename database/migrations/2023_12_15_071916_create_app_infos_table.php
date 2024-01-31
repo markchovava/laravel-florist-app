@@ -15,10 +15,15 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->nullable();
             $table->string('name')->nullable();
+            $table->longText('description')->nullable();
             $table->longText('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
+            $table->string('whatsapp')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('instagram')->nullable();
             $table->timestamps();
         });
     }

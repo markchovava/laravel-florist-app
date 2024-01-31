@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DeliveryController extends Controller
 {
+    
     public function index(Request $request){
         if(!empty($request->search)){
             $data = Delivery::with(['user'])
@@ -25,7 +26,7 @@ class DeliveryController extends Controller
     }
 
     public function indexAll(){
-        $data = Delivery::with(['user'])->get(); 
+        $data = Delivery::get(); 
         return DeliveryResource::collection($data);
     }
 
@@ -72,4 +73,5 @@ class DeliveryController extends Controller
             'message' => 'Deleted Sucessfully.'
         ]);
     }
+
 }

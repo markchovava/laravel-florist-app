@@ -26,15 +26,21 @@ class AppInfoController extends Controller
 
     }
 
+
     public function update(Request $request){
         if(!AppInfo::first()){
             $data = new AppInfo();
             $data->user_id = Auth::user()->id;
             $data->name = $request->name;
+            $data->description =  $request->description;
             $data->address =  $request->address;
             $data->phone = $request->phone;
             $data->email = $request->email;
             $data->website = $request->website;
+            $data->whatsapp = $request->whatsapp;
+            $data->facebook = $request->facebook;
+            $data->twitter = $request->twitter;
+            $data->instagram = $request->instagram;
             if( $request->hasFile('image') ){
                 $image = $request->file('image');
                 $image_extension = strtolower($image->getClientOriginalExtension());
@@ -47,10 +53,15 @@ class AppInfoController extends Controller
             $data = AppInfo::first();
             $data->user_id = Auth::user()->id;
             $data->name = $request->name;
+            $data->description =  $request->description;
             $data->address =  $request->address;
             $data->phone = $request->phone;
             $data->email = $request->email;
             $data->website = $request->website;
+            $data->whatsapp = $request->whatsapp;
+            $data->facebook = $request->facebook;
+            $data->twitter = $request->twitter;
+            $data->instagram = $request->instagram;
             if( $request->hasFile('image') ){
                 $image = $request->file('image');
                 $image_extension = strtolower($image->getClientOriginalExtension());

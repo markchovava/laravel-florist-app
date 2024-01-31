@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Models\Role\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,7 +62,7 @@ class AuthController extends Controller
     
     public function login(Request $request){
         
-        $user = User::where('email', $request->email)->first();
+        $user = User::with(['role'])->where('email', $request->email)->first();
         if(!isset($user)){
             return response()->json([
                 'message' => 'Email is not found.',
@@ -79,12 +80,15 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Login Successfully.',
             'token' => $user->createToken($user->email)->plainTextToken,
+            'role' => !empty($user->role->level) ? $user->role->level : 5,
         ]);
    
     }
 
     public function register(Request $request){
+        $role = Role::where('level', 4)->first();
         $data = new User();
+        $data->role_id = isset($role->id) ? $role->id : 0;
         $data->email = $request->email;
         $data->code = $request->password;
         $data->password = Hash::make($request->password);

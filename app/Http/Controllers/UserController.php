@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -14,14 +15,17 @@ class UserController extends Controller
 {
     
     public function index(Request $request){
+        $user_id = Auth::user()->id;
         if(!empty($request->search)){
             $data = User::with(['role'])
+                    ->where('id', '!=', $user_id)
                     ->where('name', 'LIKE', '%' . $request->search . '%')
                     ->orderBy('updated_at','asc')
                     ->orderBy('name','asc')
                     ->paginate(15);
         }else{
             $data = User::with(['role'])
+                    ->where('id', '!=', $user_id)
                     ->orderBy('updated_at','desc')
                     ->orderBy('name','asc')
                     ->orderBy('updated_at','asc')
