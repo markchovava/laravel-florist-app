@@ -44,7 +44,6 @@ class ProductCategoryController extends Controller
                 ->where('product_id', $id)
                 ->get();
         
-        Log::info($data);
         
         return ProductCategoryResource::collection($data);
     }

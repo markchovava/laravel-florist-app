@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AppInfoController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
@@ -25,6 +26,9 @@ use App\Http\Controllers\RoleController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
 Route::prefix('app-info')->group(function() {
     Route::get('/', [AppInfoController::class, 'index']);

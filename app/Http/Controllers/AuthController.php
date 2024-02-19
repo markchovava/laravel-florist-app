@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
-use App\Models\Role\Role;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -79,8 +79,8 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login Successfully.',
-            'token' => $user->createToken($user->email)->plainTextToken,
-            'role' => !empty($user->role->level) ? $user->role->level : 5,
+            'auth_token' => $user->createToken($user->email)->plainTextToken,
+            'role_level' => !empty($user->role->level) ? $user->role->level : 4,
         ]);
    
     }
@@ -95,8 +95,7 @@ class AuthController extends Controller
         $data->save();
 
         return response()->json([
-            'message' => 'Saved Successfully.',
-            'token' => $data->createToken($data->email)->plainTextToken,
+            'message' => 'Created Successfully.',
         ]);
     }
 
