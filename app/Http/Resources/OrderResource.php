@@ -12,6 +12,7 @@ class OrderResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+
     public function toArray(Request $request): array
     {
         return [
@@ -23,13 +24,15 @@ class OrderResource extends JsonResource
             'delivery_price' => $this->delivery_price,
             'product_quantity' => $this->product_quantity,
             'product_total' => $this->product_total,
-            'product_option_total' => $this->product_option_total,
-            'product_option_quantity' => $this->product_option_quantity,
-            'grandtotal' => $this->grandtotal,
+            'extra_total' => $this->extra_total,
+            'extra_quantity' => $this->extra_quantity,
+            'is_agree' => $this->is_agree,
+            'message' => $this->message,
+            'order_quantity' => $this->order_quantity,
+            'order_total' => $this->order_total,
             'user' => new UserResource($this->whenLoaded('user')),
             'order_user' => new OrderUserResource($this->whenLoaded('order_user')),
-            'order_items' => OrderItemResource::collection($this->whenLoaded('order_items')),
-            'order_item_options' => OrderItemOptionResource::collection($this->whenLoaded('order_item_options')),
+            'orderitems' => OrderItemResource::collection($this->whenLoaded('orderitems')),
             'updated_at' => $this->updated_at->format('d M Y H:i a'),
             'created_at' => $this->created_at->format('d M Y H:i a'),
         ];

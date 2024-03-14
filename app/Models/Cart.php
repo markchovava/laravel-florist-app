@@ -10,14 +10,16 @@ class Cart extends Model
     use HasFactory;
 
     public $fillable = [
+        'id',
         'user_id',
         'shopping_session',
         'ip_address',
-        'product_option_quantity',
-        'product_option_total',
-        'product_quantity',
         'product_total',
-        'grandtotal',
+        'product_quantity',
+        'extra_quantity',
+        'extra_total',
+        'cart_quantity',
+        'cart_total',
         'created_at',
         'updated_at',
     ];
@@ -27,7 +29,7 @@ class Cart extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function cart_items(){
+    public function cartitems(){
         return $this->hasMany(CartItem::class, 'cart_id', 'id');
     }
     

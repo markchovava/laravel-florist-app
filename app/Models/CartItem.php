@@ -14,12 +14,15 @@ class CartItem extends Model
         'user_id',
         'cart_id',
         'product_id',
-        'name',
-        'image',
-        'quantity',
-        'price',
-        'total',
-        'grandtotal',
+        'product_name',
+        'product_quantity',
+        'product_unit_price',
+        'product_total',
+        'extra_name',
+        'extra_quantity',
+        'extra_total',
+        'cartitem_total',
+        'cartitem_quantity',
         'created_at',
         'updated_at',
     ];
@@ -36,8 +39,6 @@ class CartItem extends Model
         return $this->belongsTo(User::class, 'cart_id', 'id');
     }
 
-    public function cart_item_option(){
-        return $this->hasOne(CartItemOption::class, 'cart_item_id', 'id');
-    }
+   
 
 }

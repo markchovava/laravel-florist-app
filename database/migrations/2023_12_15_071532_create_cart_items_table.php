@@ -16,12 +16,15 @@ return new class extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->bigInteger('cart_id')->nullable();
             $table->bigInteger('product_id')->nullable();
-            $table->string('name')->nullable();
-            $table->string('image')->nullable();
-            $table->integer('quantity')->nullable();
-            $table->bigInteger('price')->nullable();
-            $table->bigInteger('total')->nullable();
-            $table->bigInteger('grandtotal')->nullable();
+            $table->string('product_name')->nullable();
+            $table->bigInteger('product_quantity')->nullable();
+            $table->bigInteger('product_unit_price')->nullable();
+            $table->bigInteger('product_total')->nullable();
+            $table->string('extra_name')->nullable();
+            $table->bigInteger('extra_quantity')->nullable();
+            $table->bigInteger('extra_total')->nullable();
+            $table->bigInteger('cartitem_quantity')->nullable();
+            $table->bigInteger('cartitem_total')->nullable();
             $table->timestamps();
         });
     }

@@ -11,20 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
+       
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->nullable();
             $table->string('order_no')->nullable();
             $table->integer('is_agree')->nullable();
+            $table->bigInteger('extra_quantity')->nullable();
+            $table->bigInteger('extra_total')->nullable();
             $table->longText('message')->nullable();
-            $table->integer('product_quantity')->nullable();
-            $table->integer('product_total')->nullable();
-            $table->integer('product_option_quantity')->nullable();
-            $table->integer('product_option_total')->nullable();
-            $table->integer('grandtotal')->nullable();
-            $table->string('delivery_status')->nullable();
             $table->string('delivery_name')->nullable();
             $table->integer('delivery_price')->nullable();
+            $table->string('delivery_status')->nullable();
+            $table->integer('product_quantity')->nullable();
+            $table->integer('product_total')->nullable();
+            $table->bigInteger('order_quantity')->nullable();
+            $table->bigInteger('order_total')->nullable();
+            $table->string('payment_method')->nullable();
             $table->timestamps();
         });
     }

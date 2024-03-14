@@ -10,15 +10,19 @@ class OrderItem extends Model
     use HasFactory;
 
     public $fillable = [
+        'id',
         'user_id',
         'order_id',
         'product_id',
-        'name',
-        'image',
-        'quantity',
-        'price',
-        'total',
-        'grandtotal',
+        'product_name',
+        'product_quantity',
+        'product_unit_price',
+        'product_total',
+        'orderitem_quantity',
+        'orderitem_total',
+        'extra_name',
+        'extra_quantity',
+        'extra_total',
         'created_at',
         'updated_at',
     ];
@@ -36,8 +40,5 @@ class OrderItem extends Model
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
-    public function order_item_option(){
-        return $this->hasOne(OrderItemOption::class, 'order_item_id', 'id');
-    }
 
 }

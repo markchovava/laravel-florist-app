@@ -77,11 +77,12 @@ class AuthController extends Controller
             ]);
         }
 
-        return response()->json([
+        $response = response()->json([
             'message' => 'Login Successfully.',
             'auth_token' => $user->createToken($user->email)->plainTextToken,
-            'role_level' => !empty($user->role->level) ? $user->role->level : 4,
-        ]);
+            'role_level' => !empty($user->role->level) ? $user->role->level : 4,]);
+
+        return $response;
    
     }
 
@@ -97,6 +98,22 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Created Successfully.',
         ]);
+    }
+
+    public function checkEmail(Request $request){
+        $email = $request->email;
+        $data = User::where('email', $email)->first();
+        if(!empty($data)){
+            return response()->json([
+                'message' => 'Email is registered already.',
+                'code' => 1,
+            ]);
+        } else{
+            return response()->json([
+                'message' => 'Email is not registered.',
+                'code' => 0,
+            ]);
+        }
     }
 
     public function logout(){

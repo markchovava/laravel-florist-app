@@ -17,6 +17,7 @@ class VerifyCsrfToken extends Middleware
         'http://127.0.0.1:8081/cart/',
         'http://127.0.0.1:8081/cart/*',
         'http://127.0.0.1:8081/cart/checkout',
+        'http://127.0.0.1:8081/check-email',
         'http://127.0.0.1:8081/cart-item/*'
     ];
 }

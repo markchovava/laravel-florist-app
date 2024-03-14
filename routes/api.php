@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductExtraController;
 use App\Http\Controllers\ProductOptionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::prefix('cart')->group(function() {
     Route::get('/', [CartController::class, 'index']);
     Route::post('/', [CartController::class, 'store']);
+    Route::get('/list', [CartController::class, 'indexByShoppingSession']);
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
@@ -44,6 +46,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::post('/profile', [AuthController::class, 'profileUpdate']);
     Route::post('/password', [AuthController::class, 'password']);
+    Route::post('/check-email', [AuthController::class, 'checkEmail']);
 
     Route::prefix('app-info')->group(function() {
         Route::get('/', [AppInfoController::class, 'index']);
@@ -83,6 +86,13 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
         Route::delete('/{id}', [ProductController::class, 'delete']);
     });
 
+    Route::prefix('product-extra')->group(function() {
+        Route::get('/', [ProductExtraController::class, 'index']);
+        Route::get('/flower', [ProductExtraController::class, 'slugFlower']);
+        Route::get('/{id}', [ProductExtraController::class, 'view']);
+    });
+    
+
     Route::prefix('product-option')->group(function() {
         Route::get('/', [ProductOptionController::class, 'index']);
         Route::get('/all', [ProductOptionController::class, 'indexAll']);
@@ -120,7 +130,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
 
     Route::prefix('order-item')->group(function() {
-        Route::get('/items/{id}', [OrderItemController::class, 'indexById']);
+        Route::get('/by-order-id/{id}', [OrderItemController::class, 'indexByOrderId']);
     });
 
 

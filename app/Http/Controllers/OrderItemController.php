@@ -8,9 +8,8 @@ use Illuminate\Http\Request;
 
 class OrderItemController extends Controller
 {
-    public function indexById($id){
-        $data = OrderItem::with(['order_item_option'])
-                ->where('order_id', $id)
+    public function indexByOrderId($id){
+        $data = OrderItem::where('order_id', $id)
                 ->paginate(15);
 
         return OrderItemResource::collection($data);

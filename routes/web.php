@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductExtraController;
 use App\Http\Controllers\ProductOptionController;
 use App\Http\Controllers\RoleController;
 
@@ -29,6 +30,8 @@ Route::get('/', function () {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/check-email', [AuthController::class, 'checkEmail']);
+
 
 Route::prefix('app-info')->group(function() {
     Route::get('/', [AppInfoController::class, 'index']);
@@ -59,8 +62,16 @@ Route::prefix('product')->group(function() {
     Route::get('/{id}', [ProductController::class, 'show']);
 });
 
+Route::prefix('product-extra')->group(function() {
+    Route::get('/', [ProductExtraController::class, 'index']);
+    Route::get('/flower', [ProductExtraController::class, 'slugFlower']);
+    Route::get('/{id}', [ProductExtraController::class, 'view']);
+});
+
 Route::prefix('cart')->group(function() {
     Route::get('/', [CartController::class, 'index']);
+    Route::get('/list', [CartController::class, 'indexByShoppingSession']);
+    Route::delete('/cart-item', [CartController::class, 'deleteCartItem']);
     Route::post('/', [CartController::class, 'store']);
     Route::get('/checkout', [CartController::class, 'cartCheckout']);
     Route::post('/all', [CartController::class, 'storeAll']);

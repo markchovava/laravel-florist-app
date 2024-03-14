@@ -16,111 +16,93 @@ class CartController extends Controller
     public function randStr(){
         $chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
         $shuffled = str_shuffle($chars);
-        return substr($shuffled, 0, 8);
+        return substr($shuffled, 0, 10);
     }
 
-    public function index(Request $request){
-        $data = Cart::orderBy('updated_at','desc')
+    public function index(){
+        $data = Cart::with(['user_id'])->orderBy('updated_at','desc')
                 ->paginate(15);
-        
 
         return CartResource::collection($data);
 
     }
     
-
-    /* ADD SINGLE ITEM */
     public function store(Request $request){
         $cart = Cart::where('shopping_session', $request->shopping_session)->first();
         if(isset($cart)){
-            $cart->product_option_quantity += $request->product_option_quantity;
-            $cart->product_option_total += $request->product_option_total;
+            $cart->user_id = Auth::check() ? Auth::user()->id : null;
             $cart->product_quantity += $request->product_quantity;
             $cart->product_total += $request->product_total;
-            $cart->grandtotal += $request->grandtotal;
-            $cart->updated_at = now();
+            $cart->extra_quantity += $request->extra_quantity;
+            $cart->extra_total += $request->extra_total;
+            $cart->cart_quantity += (int)$request->product_quantity + (int)$request->extra_quantity;
+            $cart->cart_total += (int)$request->product_total + (int)$request->extra_total;
             $cart->save();
-            if(!empty($request->item)) {
-                $item = new CartItem();
-                $item->cart_id = $cart->id;
-                $item->product_id = $request->item['id'];
-                $item->name = $request->item['name'];
-                $item->image = $request->item['image'];
-                $item->price = $request->item['price'];
-                $item->quantity = $request->item['quantity'];
-                $item->total = $request->item['total'];
-                $item->grandtotal = $request->item['grandtotal'];
-                $item->created_at = now();
-                $item->updated_at = now();
-                $item->save();  
+            /*  */
+            $cartitem = CartItem::where('product_id', $request->product_id)
+                                ->where('cart_id', $cart->id)
+                                ->first();
+            if(isset($cartitem)){
+                $cartitem->product_quantity += $request->product_quantity;
+                $cartitem->product_total += $request->product_total;
+                $cartitem->extra_quantity += $request->extra_quantity;
+                $cartitem->extra_total += $request->extra_total;
+                $cartitem->cartitem_quantity += (int)$request->product_quantity + (int)$request->extra_quantity;
+                $cartitem->cartitem_total += (int)$request->product_total + (int)$request->extra_total;
+                $cartitem->save();
+            } else{
+                $cartitem = new CartItem();
+                $cartitem->user_id = Auth::check() ? Auth::user()->id : null;
+                $cartitem->cart_id = $cart->id;
+                $cartitem->product_id = $request->product_id;
+                $cartitem->product_name =$request->product_name;
+                $cartitem->product_unit_price = $request->product_unit_price;
+                $cartitem->product_quantity = $request->product_quantity;
+                $cartitem->product_total = $request->product_total;
+                $cartitem->extra_name = $request->extra_name;
+                $cartitem->extra_quantity = $request->extra_quantity;
+                $cartitem->extra_total =   $request->extra_total;
+                $cartitem->cartitem_quantity = (int)$request->product_quantity + (int)$request->extra_quantity;
+                $cartitem->cartitem_total = (int)$request->product_total + (int)$request->extra_total;
+                $cartitem->save();
             }
-            if(!empty($request->product_option)) {
-                $option = new CartItemOption();
-                $option->product_option_id = $request->product_option['id'];
-                $option->cart_id = $cart->id;
-                $option->cart_item_id = $item->id;
-                $option->name = $request->product_option['name'];
-                $option->price = $request->product_option['price'];
-                $option->quantity = $request->product_option['quantity'];
-                $option->total = $request->product_option['total'];
-                $option->created_at = now();
-                $option->updated_at = now();
-                $option->save();
-            }
-            return response()->json([
-                'message' => 'Saved Successfully.',
-                'data' => new CartResource($cart),
-            ]);
-            
-        } 
-
-        $cart = new Cart();
-        $cart->shopping_session = $this->randStr();
-        $cart->ip_address = $request->ip();
-        $cart->product_option_quantity = $request->product_option_quantity;
-        $cart->product_option_total = $request->product_option_total;
-        $cart->product_quantity = $request->product_quantity;
-        $cart->product_total = $request->product_total;
-        $cart->grandtotal = $request->grandtotal;
-        $cart->created_at = now();
-        $cart->updated_at = now();
-        $cart->save();
-        if(!empty($request->item)) {
-            $item = new CartItem();
-            $item->cart_id = $cart->id;
-            $item->product_id = $request->item['id'];
-            $item->name = $request->item['name'];
-            $item->image = $request->item['image'];
-            $item->price = $request->item['price'];
-            $item->quantity = $request->item['quantity'];
-            $item->total = $request->item['total'];
-            $item->grandtotal = $request->item['grandtotal'];
-            $item->created_at = now();
-            $item->updated_at = now();
-            $item->save();  
+        } else {
+            $cart = new Cart();
+            $cart->user_id = Auth::check() ? Auth::user()->id : null;
+            $cart->shopping_session = $this->randStr();
+            $cart->ip_address = $request->ip();
+            $cart->product_quantity = $request->product_quantity;
+            $cart->product_total = $request->product_total;
+            $cart->extra_quantity = $request->extra_quantity;
+            $cart->extra_total = $request->extra_total;
+            $cart->cart_quantity = (int)$request->product_quantity + (int)$request->extra_quantity;
+            $cart->cart_total = (int)$request->product_total + (int)$request->extra_total;
+            $cart->save();
+            /*  */
+            $cartitem = new CartItem();
+            $cartitem->user_id = Auth::check() ? Auth::user()->id : null;
+            $cartitem->cart_id = $cart->id;
+            $cartitem->product_id = $request->product_id;
+            $cartitem->product_name =$request->product_name;
+            $cartitem->product_quantity = $request->product_quantity;
+            $cartitem->product_unit_price = $request->product_unit_price;
+            $cartitem->product_total = $request->product_total;
+            $cartitem->extra_name = $request->extra_name;
+            $cartitem->extra_quantity = $request->extra_quantity;
+            $cartitem->extra_total =   $request->extra_total;
+            $cartitem->cartitem_quantity = (int)$request->product_quantity + (int)$request->extra_quantity;
+            $cartitem->cartitem_total = (int)$request->product_total + (int)$request->extra_total;
+            $cartitem->save();
         }
-        if(!empty($request->product_option)) {
-            $option = new CartItemOption();
-            $option->product_option_id = $request->product_option['id'];
-            $option->cart_id = $cart->id;
-            $option->cart_item_id = $item->id;
-            $option->name = $request->product_option['name'];
-            $option->price = $request->product_option['price'];
-            $option->quantity = $request->product_option['quantity'];
-            $option->total = $request->product_option['total'];
-            $option->created_at = now();
-            $option->updated_at = now();
-            $option->save();
-        } 
+
         return response()->json([
             'message' => 'Saved Successfully.',
-            'data' => new CartResource($cart),
+            'cart' => new CartResource($cart),
+            'cartitem' => new CartItemResource($cartitem),
             'shopping_session' => $cart->shopping_session,
         ]);
-
-        
-             
     }
+   
 
     public function storeAll(Request $request){
         $cart = Cart::where('shopping_session', $request->shopping_session)->first();
@@ -134,7 +116,6 @@ class CartController extends Controller
             $cart->save();
 
             CartItem::where('cart_id', $cart->id)->delete();
-            CartItemOption::where('cart_id', $cart->id)->delete();
 
             if(!empty($request->items)){
                 for($i = 0; $i < count($request->items); $i++){
@@ -145,24 +126,11 @@ class CartController extends Controller
                     $item->image = $request->items[$i]['image'];
                     $item->price = $request->items[$i]['price'];
                     $item->quantity = $request->items[$i]['quantity'];
-                    $item->total = $request->items[$i]['price'] * $request->items[$i]['quantity'];
-                    $item->grandtotal = $item->total + ($request->items[$i]['cart_item_option']['price'] * 
-                                $request->items[$i]['cart_item_option']['quantity']);
+                   
                     $item->created_at = now();
                     $item->updated_at = now();
                     $item->save();
-                    /* CART ITEM OPTION */
-                    $option = new CartItemOption();
-                    $option->cart_id = $cart->id;
-                    $option->cart_item_id = $item->id;
-                    $option->product_option_id = $request->items[$i]['cart_item_option']['id'];
-                    $option->name = $request->items[$i]['cart_item_option']['name'];
-                    $option->price = $request->items[$i]['cart_item_option']['price'];
-                    $option->quantity = $request->items[$i]['cart_item_option']['quantity'];
-                    $option->total = $request->items[$i]['cart_item_option']['total'];
-                    $option->created_at = now();
-                    $option->updated_at = now();
-                    $option->save();
+                   
                 }
             }
 
@@ -173,16 +141,50 @@ class CartController extends Controller
         }
     }
 
+    public function indexByShoppingSession(Request $request){
+        $cart = Cart::where('shopping_session', $request->shopping_session)->first();
+        if(isset($cart)){
+            $cartitems = CartItem::where('cart_id', $cart->id)->get();
+            return response()->json([
+                'cart' => new CartResource($cart),
+                'cartitems' => CartItemResource::collection($cartitems),
+            ]);
+        }
+        return response()->json([
+            'message' => 'Cart is empty.',
+        ]);
+
+    }
+
     public function cartCheckout(Request $request){
         $cart = Cart::where('shopping_session', $request->shopping_session)->first();
-        $cart_items = CartItem::with(['cart_item_option'])->where('cart_id', $cart->id)->get();
+        //$cartitems = CartItem::where('cart_id', $cart->id)->get();
 
         return response()->json([
             'cart' => new CartResource($cart),
-            'cart_items' => CartItemResource::collection($cart_items),
+            //'cartitems' => CartItemResource::collection($cartitems),
         ]);
     }
  
-    public function update(Request $request, $id){}
-    public function delete($id){}
+    
+
+    public function deleteCartItem(Request $request){
+        if(!empty($request->id && !empty($request->cart_id))){
+            $cartitem = CartItem::where('id', $request->id)
+                        ->where('cart_id', $request->cart_id)
+                        ->first();
+            $cart = Cart::where('id', $request->cart_id)->first();
+            $cart->product_quantity -= $cartitem->product_quantity;
+            $cart->product_total -= $cartitem->product_total;
+            $cart->extra_quantity -= $cartitem->extra_quantity;
+            $cart->extra_total -= $cartitem->extra_total;
+            $cart->cart_total -= $cartitem->cartitem_total;
+            $cart->save();
+            CartItem::where('id', $request->id)->delete();
+
+            return response()->json([
+                'message' => 'Deleted successfully.',
+            ]);
+        }
+    }
 }
