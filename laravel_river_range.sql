@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 14, 2024 at 01:32 PM
+-- Generation Time: Mar 21, 2024 at 01:46 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -72,6 +72,13 @@ CREATE TABLE `carts` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `user_id`, `shopping_session`, `ip_address`, `product_quantity`, `product_total`, `extra_quantity`, `extra_total`, `cart_quantity`, `cart_total`, `created_at`, `updated_at`) VALUES
+(52, NULL, 'uvtz5l6jy7', '127.0.0.1', 4, 10200, 20, 500, 54, 10700, '2024-03-20 08:51:36', '2024-03-20 12:46:33');
+
 -- --------------------------------------------------------
 
 --
@@ -95,6 +102,15 @@ CREATE TABLE `cart_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cart_items`
+--
+
+INSERT INTO `cart_items` (`id`, `user_id`, `cart_id`, `product_id`, `product_name`, `product_quantity`, `product_unit_price`, `product_total`, `extra_name`, `extra_quantity`, `extra_total`, `cartitem_quantity`, `cartitem_total`, `created_at`, `updated_at`) VALUES
+(64, NULL, 52, 61, 'Mixed Bouquets S10', 2, 2000, 4000, NULL, 10, 0, 12, 4000, '2024-03-20 09:57:58', '2024-03-20 10:00:20'),
+(66, NULL, 52, 83, 'Roses only bouquets S30', 1, 4200, 4200, 'Extra Flowers', 5, NULL, 6, 4200, '2024-03-20 11:00:39', '2024-03-20 11:00:39'),
+(68, NULL, 52, 84, 'Roses only bouquets S10', 1, 2000, 2000, 'Extra Flowers', 5, 500, 6, 2500, '2024-03-20 12:46:33', '2024-03-20 12:46:33');
 
 -- --------------------------------------------------------
 
@@ -135,6 +151,7 @@ CREATE TABLE `categories` (
   `name` varchar(255) DEFAULT NULL,
   `priority` int(11) DEFAULT NULL,
   `description` longtext DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -143,13 +160,14 @@ CREATE TABLE `categories` (
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `user_id`, `name`, `priority`, `description`, `created_at`, `updated_at`) VALUES
-(2, 1, 'Protea Pincushion Bouquets', 3, 'Praise', '2024-01-12 14:12:46', '2024-03-12 06:16:11'),
-(3, 1, 'Mixed Bouquets', 1, 'qwe', '2024-01-15 09:57:36', '2024-03-12 06:14:41'),
-(4, 1, 'Baskets', 4, 'hjgh', '2024-01-17 15:17:36', '2024-03-12 12:14:57'),
-(5, 1, 'Boxed Roses', 4, '...', '2024-03-12 06:17:08', '2024-03-12 06:17:08'),
-(6, 1, 'Roses only Bouquets', 3, '...', '2024-03-12 06:18:19', '2024-03-12 06:18:19'),
-(7, 1, 'Featured Products', 2, NULL, '2024-03-12 12:14:25', '2024-03-12 12:14:25');
+INSERT INTO `categories` (`id`, `user_id`, `name`, `priority`, `description`, `slug`, `created_at`, `updated_at`) VALUES
+(2, 1, 'Protea Pincushion Bouquets', 5, 'We pride ourselves with bouquets that are full of fresh cut roses.\nCustomers can order our standard bouquets described in the catalogue and order as many extra roses as they want to be added to their bouquet or to be delivered as a separate extra bouquet. Enjoy ordering our standard bouquets and extras. Experience the bliss of flowers when we deliver your order.', 'protea', '2024-01-12 14:12:46', '2024-03-21 10:18:14'),
+(3, 1, 'Mixed Bouquets', 2, 'We pride ourselves with bouquets that are full of fresh cut roses.\nCustomers can order our standard bouquets described in the catalogue and order as many extra roses as they want to be added to their bouquet or to be delivered as a separate extra bouquet.\nEnjoy ordering our standard bouquets and extras!!\nExperience the bliss of flowers when we deliver your order.', 'mixed', '2024-01-15 09:57:36', '2024-03-21 10:13:24'),
+(4, 1, 'Baskets', 3, 'We pride ourselves with bouquets that are full of fresh cut roses.\nCustomers can order our standard bouquets described in the catalogue and order as many extra roses as they want to be added to their bouquet or to be delivered as a separate extra bouquet. Enjoy ordering our standard bouquets and extras. Experience the bliss of flowers when we deliver your order.', 'basket', '2024-01-17 15:17:36', '2024-03-21 10:17:33'),
+(5, 1, 'Boxed Roses', 4, 'We pride ourselves with bouquets that are full of fresh cut roses.\nCustomers can order our standard bouquets described in the catalogue and order as many extra roses as they want to be added to their bouquet or to be delivered as a separate extra bouquet. Enjoy ordering our standard bouquets and extras. Experience the bliss of flowers when we deliver your order.', 'boxed', '2024-03-12 06:17:08', '2024-03-21 10:17:57'),
+(6, 1, 'Roses only Bouquets', 1, 'Select from our roses only bouquets. Various colors and sizes are available.', 'roses', '2024-03-12 06:18:19', '2024-03-21 10:16:08'),
+(7, 1, 'Featured Products', 7, 'We pride ourselves with bouquets that are full of fresh cut roses.\nCustomers can order our standard bouquets described in the catalogue and order as many extra roses as they want to be added to their bouquet or to be delivered as a separate extra bouquet. Enjoy ordering our standard bouquets and extras. Experience the bliss of flowers when we deliver your order.', 'featured', '2024-03-12 12:14:25', '2024-03-21 10:29:58'),
+(8, 1, 'Top Selling', 6, 'We pride ourselves with bouquets that are full of fresh cut roses.\nCustomers can order our standard bouquets described in the catalogue and order as many extra roses as they want to be added to their bouquet or to be delivered as a separate extra bouquet. Enjoy ordering our standard bouquets and extras. Experience the bliss of flowers when we deliver your order.\nMedium size,\n5 roses,\nL= 40-45cm,\nW=30cm.', 'top-selling', '2024-03-20 13:26:07', '2024-03-20 13:34:34');
 
 -- --------------------------------------------------------
 
@@ -268,7 +286,8 @@ INSERT INTO `orders` (`id`, `user_id`, `order_no`, `is_agree`, `extra_quantity`,
 (40, 1, 'REF202403145384', 1, 0, 0, NULL, 'Harare CBD', 1000, 'Processing', 1, 1500, 1, 2500, 'Paynow', '2024-03-14 09:45:52', '2024-03-14 09:45:52'),
 (41, 1, 'REF202403147391', 1, 10, 1000, NULL, 'Harare CBD', 1000, 'Processing', 2, 4000, 12, 6000, 'Paynow', '2024-03-14 10:08:40', '2024-03-14 10:08:40'),
 (42, 1, 'REF202403142641', 1, 0, 0, NULL, '15km around Harare', 1500, 'Processing', 2, 6000, 2, 7500, 'Paynow', '2024-03-14 10:10:45', '2024-03-14 10:10:45'),
-(43, 1, 'REF202403146530', 1, 5, 500, NULL, 'Harare CBD', 1000, 'Processing', 1, 2500, 6, 4000, 'Paynow', '2024-03-14 10:14:06', '2024-03-14 10:14:06');
+(43, 1, 'REF202403146530', 1, 5, 500, NULL, 'Harare CBD', 1000, 'Processing', 1, 2500, 6, 4000, 'Paynow', '2024-03-14 10:14:06', '2024-03-14 10:14:06'),
+(44, 1, 'REF202403188229', 1, 5, 500, NULL, '15km around Harare', 1500, 'Processing', 3, 63000, 8, 65000, 'Paynow', '2024-03-18 12:21:41', '2024-03-18 12:21:41');
 
 -- --------------------------------------------------------
 
@@ -309,7 +328,8 @@ INSERT INTO `order_items` (`id`, `user_id`, `order_id`, `product_id`, `product_n
 (42, 1, 41, 54, 'Protea Pincushion Bouquets S10', 1500, 1, 1500, 1500, 1, 'Extra Flowers', 0, 0, '2024-03-14 10:08:40', '2024-03-14 10:08:40'),
 (43, 1, 41, 55, 'Protea Pincushion bouquets L10', 2500, 1, 2500, 3500, 11, 'Extra Flowers', 10, 1000, '2024-03-14 10:08:40', '2024-03-14 10:08:40'),
 (44, 1, 42, 82, 'Roses only bouquets S20', 3000, 2, 6000, 6000, 2, 'Extra Flowers', 0, 0, '2024-03-14 10:10:45', '2024-03-14 10:10:45'),
-(45, 1, 43, 55, 'Protea Pincushion bouquets L10', 2500, 1, 2500, 3000, 6, 'Extra Flowers', 5, 500, '2024-03-14 10:14:06', '2024-03-14 10:14:06');
+(45, 1, 43, 55, 'Protea Pincushion bouquets L10', 2500, 1, 2500, 3000, 6, 'Extra Flowers', 5, 500, '2024-03-14 10:14:06', '2024-03-14 10:14:06'),
+(46, 1, 44, 95, 'Roses only bouquets M100', 21000, 3, 63000, 63500, 8, 'Extra Flowers', 5, 500, '2024-03-18 12:21:41', '2024-03-18 12:21:41');
 
 -- --------------------------------------------------------
 
@@ -347,7 +367,8 @@ INSERT INTO `order_users` (`id`, `order_id`, `user_id`, `name`, `first_name`, `l
 (39, 40, 1, 'Mark Chovava', 'Mark', 'Chovava', '14949  Tynwald South, Harare, Zimbabwe', 'Harare', 'Zimbabwe', 'markchovava@gmail.com', '+263782210021', '2024-03-14 09:45:52', '2024-03-14 09:45:52'),
 (40, 41, 1, 'Mark Chovava', 'Mark', 'Chovava', '14949  Tynwald South, Harare, Zimbabwe', 'Harare', 'Zimbabwe', 'markchovava@gmail.com', '+263782210021', '2024-03-14 10:08:40', '2024-03-14 10:08:40'),
 (41, 42, 1, 'Mark Chovava', 'Mark', 'Chovava', '14949  Tynwald South, Harare, Zimbabwe', 'Harare', 'Zimbabwe', 'markchovava@gmail.com', '+263782210021', '2024-03-14 10:10:45', '2024-03-14 10:10:45'),
-(42, 43, 1, 'Mark Chovava', 'Mark', 'Chovava', '14949  Tynwald South, Harare, Zimbabwe', 'Harare', 'Zimbabwe', 'markchovava@gmail.com', '+263782210021', '2024-03-14 10:14:06', '2024-03-14 10:14:06');
+(42, 43, 1, 'Mark Chovava', 'Mark', 'Chovava', '14949  Tynwald South, Harare, Zimbabwe', 'Harare', 'Zimbabwe', 'markchovava@gmail.com', '+263782210021', '2024-03-14 10:14:06', '2024-03-14 10:14:06'),
+(43, 44, 1, 'Mark Chovava', 'Mark', 'Chovava', '14949  Tynwald South, Harare, Zimbabwe', 'Harare', 'Zimbabwe', 'markchovava@gmail.com', '+263782210021', '2024-03-18 12:21:41', '2024-03-18 12:21:41');
 
 -- --------------------------------------------------------
 
@@ -418,8 +439,7 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (69, 'App\\Models\\User', 1, 'mark@email.com', 'f1de5d7eab1327a10bc502d139bd7cd8e30e4b08e76d7deb9cdb9c13880bd452', '[\"*\"]', NULL, NULL, '2024-02-20 18:32:47', '2024-02-20 18:32:47'),
 (70, 'App\\Models\\User', 1, 'mark@email.com', 'd048b63e99f82b8af0f6f5164fa2a8e97d57bb95156bc39969e4832328ac7b86', '[\"*\"]', NULL, NULL, '2024-02-20 18:32:48', '2024-02-20 18:32:48'),
 (71, 'App\\Models\\User', 1, 'mark@email.com', '91978ed7cba649f672671a9f5ca5e981a25fbd21f41eaaa5f4d699750ad6ecba', '[\"*\"]', NULL, NULL, '2024-02-21 04:09:54', '2024-02-21 04:09:54'),
-(72, 'App\\Models\\User', 1, 'mark@email.com', 'ab91427ed82b331065170ad04015c02dfdb6a27291cbe67ad0683480e6411c84', '[\"*\"]', NULL, NULL, '2024-02-21 04:09:55', '2024-02-21 04:09:55'),
-(73, 'App\\Models\\User', 1, 'mark@email.com', '463f66dcb088c0481809a1ec82eef1be1e376e4028e6f36513c80e54b46e420c', '[\"*\"]', '2024-03-14 10:14:14', NULL, '2024-03-12 06:11:16', '2024-03-14 10:14:14');
+(72, 'App\\Models\\User', 1, 'mark@email.com', 'ab91427ed82b331065170ad04015c02dfdb6a27291cbe67ad0683480e6411c84', '[\"*\"]', NULL, NULL, '2024-02-21 04:09:55', '2024-02-21 04:09:55');
 
 -- --------------------------------------------------------
 
@@ -435,6 +455,7 @@ CREATE TABLE `products` (
   `price` int(11) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `thumbnail` varchar(255) DEFAULT NULL,
+  `priority` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -443,49 +464,51 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `user_id`, `name`, `description`, `price`, `image`, `thumbnail`, `created_at`, `updated_at`) VALUES
-(51, 1, 'Mixed Bouquets M10', 'We pride ourselves with bouquets that are full of fresh cut roses.\r\nCustomers can order our standard bouquets described in the catalogue and order as many extra roses as they want to be added to their bouquet or to be delivered as a separate extra bouquet. Enjoy ordering our standard bouquets and extras. Experience the bliss of flowers when we deliver your order.\r\nMedium size,\r\n5 roses,\r\nL= 40-45cm,\r\nW=30cm.', 1500, 'storage/img/products/image_20240312080.jpg', 'storage/img/products/thumbnail_2024031208149.jpg', '2023-12-15 15:07:22', '2024-03-12 11:22:23'),
-(52, 1, 'Protea Pincushion Bouquets L10', 'Protea Pincushion Bouquets small size arrangement in a basket with 10 flowers.', 2500, 'storage/img/products/image_2024031210820.jpg', 'storage/img/products/thumbnail_2024031210285.jpg', '2023-12-15 15:09:17', '2024-03-12 11:02:36'),
-(53, 1, 'Baskets S9 Oval', 'Small size arrangement in a basket with 9 roses plus an assortment of fillers and greenery.\r\nLength=25cm\r\nWidth= 15cm\r\nHeight=10cm', 2800, 'storage/img/products/image_2024031209902.jpg', 'storage/img/products/thumbnail_202403120965.jpg', '2023-12-15 15:10:25', '2024-03-12 11:17:05'),
-(54, 1, 'Protea Pincushion Bouquets S10', 'Protea Pincushion Bouquets small size arrangement in a basket with 10 flowers. Length = 40cm - 45cm, Width= 35cm.', 1500, 'storage/img/products/image_2024031210578.jpg', 'storage/img/products/thumbnail_2024031210215.jpg', '2023-12-15 15:15:57', '2024-03-12 11:09:51'),
-(55, 1, 'Protea Pincushion bouquets L10', 'Protea Pincushion Bouquets small size arrangement in a basket with 10 flowers.', 2500, 'storage/img/products/image_2024021910822.jpg', 'storage/img/products/thumbnail_2024021910320.jpg', '2023-12-15 15:23:20', '2024-03-12 11:05:02'),
-(56, 1, 'Protea Pincushion bouquets M15', 'Protea Pincushion bouquets medium size arrangement in a basket with 15 flowers.', 2500, 'storage/img/products/image_20240312104.jpg', 'storage/img/products/thumbnail_202403121090.jpg', '2023-12-15 15:24:19', '2024-03-12 11:06:36'),
-(57, 1, 'Protea Pincushion Bouquets M10', 'Protea Pincushion Bouquets medium size arrangement in a basket with 10 flowers.', 2000, 'storage/img/products/image_2024021910747.jpg', 'storage/img/products/thumbnail_2024021910465.jpg', '2023-12-15 15:26:24', '2024-03-12 11:07:15'),
-(58, 1, 'Baskets M9 Oval', 'Baskets M9 Oval medium size arrangement in a basket with 9 roses plus an assortment of fillers and greenery.\r\nLength = 35cm,\r\nWidth = 20cm,\r\nHeight = 10cm.', 3200, 'storage/img/products/image_2024031209567.jpg', 'storage/img/products/thumbnail_202403120918.jpg', '2023-12-15 15:28:09', '2024-03-12 11:11:59'),
-(61, 1, 'Mixed Bouquets S10', 'We pride ourselves with bouquets that are full of fresh cut roses. Customers can order our standard bouquets described in the catalogue and order as many extra roses as they want to be added to their bouquet or to be delivered as a separate extra bouquet. Enjoy ordering our standard bouquets and extras. Experience the bliss of flowers when we deliver your order.', 2000, 'storage/img/products/image_2024021910857.jpg', 'storage/img/products/thumbnail_2024021910106.jpg', '2023-12-15 18:01:44', '2024-03-12 06:42:33'),
-(63, 1, 'Baskets L13 oval', 'Baskets L13 oval large size arrangement in a basket with 13 roses plus an assortment of fillers and greenery.\r\nLength=45cm, Width = 25cm, Height = 15cm.', 5000, 'storage/img/products/image_2024031209409.jpg', 'storage/img/products/thumbnail_202403120960.jpg', '2023-12-15 18:16:39', '2024-03-12 11:13:14'),
-(64, 1, 'Baskets L13 round', 'Large size arrangement in a basket with 13 roses plus an assortment of fillers and greenery.\r\nDiameter=45cm,\r\nHeight = 15cm.', 4500, 'storage/img/products/image_202403120937.jpg', 'storage/img/products/thumbnail_2024031209401.jpg', '2023-12-15 18:21:18', '2024-03-12 11:20:56'),
-(65, 1, 'Mixed Bouquets S5', 'We pride ourselves with bouquets that are full of fresh cut roses. Customers can order our standard bouquets described in the catalogue and order as many extra roses as they want to be added to their bouquet or to be delivered as a separate extra bouquet. Enjoy ordering our standard bouquets and extras. Experience the bliss of flowers when we deliver your order. \r\nA small size bouquet with 5 roses plus an assortment of fillers and greenery.\r\nLength= 30-35cm\r\nWidth at top= 20cm', 1500, 'storage/img/products/image_2024031208675.jpg', 'storage/img/products/thumbnail_202403120813.jpg', '2023-12-15 18:23:30', '2024-03-12 06:39:19'),
-(66, 1, 'Mixed Bouquets L10', 'We pride ourselves with bouquets that are full of fresh cut roses. Customers can order our standard bouquets described in the catalogue and order as many extra roses as they want to be added to their bouquet or to be delivered as a separate extra bouquet. Enjoy ordering our standard bouquets and extras. Experience the bliss of flowers when we deliver your order.\r\nLarge Size, <br />\r\n10 roses. <br />\r\nL= 50-55cm, <br />\r\nW=40cm <br />', 2500, 'storage/img/products/image_2024031209510.jpg', 'storage/img/products/thumbnail_2024031209859.jpg', '2023-12-16 08:35:33', '2024-03-12 11:19:06'),
-(67, 1, 'Mixed Bouquets M5', 'We pride ourselves with bouquets that are full of fresh cut roses. Customers can order our standard bouquets described in the catalogue and order as many extra roses as they want to be added to their bouquet or to be delivered as a separate extra bouquet. Enjoy ordering our standard bouquets and extras. Experience the bliss of flowers when we deliver your order. A small size bouquet with 5 roses plus an assortment of fillers and greenery.  \r\nMedium size\r\n5 roses\r\nL= 40-45cm\r\nW=30cm', 1500, 'storage/img/products/image_2024031209947.jpg', 'storage/img/products/thumbnail_2024031209395.jpg', '2024-01-15 07:57:17', '2024-03-12 11:18:13'),
-(68, 1, 'Baskets M9 Round', 'Baskets M9 Round medium size arrangement in a basket with 9 roses plus an assortment of fillers and greenery.\r\nDiameter=35cm\r\nHeight = 10cm', 3000, 'storage/img/products/image_2024021910124.jpg', 'storage/img/products/thumbnail_2024021910273.jpg', '2024-01-16 11:20:04', '2024-03-12 11:20:20'),
-(69, 1, 'Protea Pincushion Bouquets L15', 'Protea Pincushion Bouquets large size arrangement in a basket with 15 flowers.', 3500, 'storage/img/products/image_202403121093.jpg', 'storage/img/products/thumbnail_20240310835.jpg', '2024-03-12 08:33:10', '2024-03-12 11:01:47'),
-(70, 1, 'Protea Pincushion Bouquets L20', 'Protea Pincushion Bouquets large size arrangement in a basket with 20 flowers.', 4500, 'storage/img/products/image_2024031210491.jpg', 'storage/img/products/thumbnail_20240310731.jpg', '2024-03-12 08:37:42', '2024-03-12 11:00:58'),
-(71, 1, 'Protea Pincushion Bouquets L30', 'Protea Pincushion Bouquets large size arrangement with 30 flowers.', 6500, 'storage/img/products/image_2024031211150.jpg', 'storage/img/products/thumbnail_20240311484.jpg', '2024-03-12 09:01:04', '2024-03-12 11:00:09'),
-(72, 1, 'Round Small Boxed Roses', 'Round Small Boxed Roses arrangement of roses.', 8500, 'storage/img/products/image_2024031211739.jpg', 'storage/img/products/thumbnail_20240311751.jpg', '2024-03-12 09:09:52', '2024-03-12 10:54:45'),
-(73, 1, 'Medium Round Boxed Roses', 'Medium Round Box arrangement of roses.', 10500, 'storage/img/products/image_2024031211184.jpg', 'storage/img/products/thumbnail_2024031190.jpg', '2024-03-12 09:11:15', '2024-03-12 10:55:47'),
-(74, 1, 'Large Round Boxed Roses', 'Large Round Boxed Roses arrangement of roses', 15000, 'storage/img/products/image_2024031211234.jpg', 'storage/img/products/thumbnail_20240311323.jpg', '2024-03-12 09:12:29', '2024-03-12 10:56:15'),
-(75, 1, 'Small Heart Boxed Roses', 'Small Heart Boxed Roses arrangement of roses.', 8500, 'storage/img/products/image_2024031211936.jpg', 'storage/img/products/thumbnail_20240311938.jpg', '2024-03-12 09:13:48', '2024-03-12 10:56:39'),
-(76, 1, 'Medium Heart Boxed Roses', 'Medium Heart Boxed Roses arrangement of roses.', 10500, 'storage/img/products/image_2024031211529.jpg', 'storage/img/products/thumbnail_20240311561.jpg', '2024-03-12 09:16:28', '2024-03-12 10:57:18'),
-(77, 1, 'Large Heart Boxed Roses', 'Large Heart Boxed Roses arrangement of roses.', 15000, 'storage/img/products/image_2024031211351.jpg', 'storage/img/products/thumbnail_20240311132.jpg', '2024-03-12 09:20:52', '2024-03-12 10:54:11'),
-(78, 1, 'Small Square Boxed Roses', 'Small Square Boxed Roses arrangement of roses.', 8500, 'storage/img/products/image_2024031211465.jpg', 'storage/img/products/thumbnail_20240311210.jpg', '2024-03-12 09:25:08', '2024-03-12 10:53:37'),
-(79, 1, 'Medium Square Boxed Roses', 'Medium Square Boxed Roses arrangement of roses.', 10500, 'storage/img/products/image_2024031211559.jpg', 'storage/img/products/thumbnail_20240311185.jpg', '2024-03-12 09:26:39', '2024-03-12 10:53:04'),
-(80, 1, 'Large Square Boxed Roses', 'Large Square Boxed Roses arrangement of roses.', 15000, 'storage/img/products/image_2024031211866.jpg', 'storage/img/products/thumbnail_2024031116.jpg', '2024-03-12 09:27:53', '2024-03-12 10:52:29'),
-(81, 1, 'Roses only Bouquets M10', 'Various colors and sizes are available.', 2500, 'storage/img/products/image_202403121379.jpg', 'storage/img/products/thumbnail_20240313158.jpg', '2024-03-12 11:26:21', '2024-03-12 11:47:09'),
-(82, 1, 'Roses only bouquets S20', 'Roses only bouquets various colors and sizes are available.', 3000, 'storage/img/products/image_202403121364.jpg', 'storage/img/products/thumbnail_2024031213843.jpg', '2024-03-12 11:28:07', '2024-03-12 11:48:53'),
-(83, 1, 'Roses only bouquets S30', 'Various colors and sizes are available.', 4200, 'storage/img/products/image_2024031213272.jpg', 'storage/img/products/thumbnail_20240313217.jpg', '2024-03-12 11:29:15', '2024-03-12 11:43:56'),
-(84, 1, 'Roses only bouquets S10', 'Various colors and sizes are available.', 2000, 'storage/img/products/image_2024031213466.jpg', 'storage/img/products/thumbnail_2024031213440.jpg', '2024-03-12 11:29:54', '2024-03-12 11:44:20'),
-(85, 1, 'Roses only bouquets M10', 'Roses only bouquets with various colors and sizes are available.', 2500, 'storage/img/products/image_2024031213790.jpg', 'storage/img/products/thumbnail_20240313427.jpg', '2024-03-12 11:32:16', '2024-03-12 11:44:46'),
-(86, 1, 'Roses only bouquets M20', 'Roses only bouquets with various colors and sizes are available.', 4000, 'storage/img/products/image_2024031213627.jpg', 'storage/img/products/thumbnail_20240313964.jpg', '2024-03-12 11:33:08', '2024-03-12 11:46:11'),
-(87, 1, 'Roses only bouquets M30', 'Roses only bouquets with various colors and sizes are available.', 5500, 'storage/img/products/image_2024031213565.jpg', 'storage/img/products/thumbnail_20240313167.jpg', '2024-03-12 11:34:00', '2024-03-12 11:49:23'),
-(88, 1, 'Roses only bouquets M40', 'Roses only bouquets with various colors and sizes are available.', 7000, 'storage/img/products/image_2024031213868.jpg', 'storage/img/products/thumbnail_20240313484.jpg', '2024-03-12 11:35:21', '2024-03-12 11:47:43'),
-(89, 1, 'Roses only bouquets M50', 'Roses only bouquets with various colors and sizes are available.', 8600, 'storage/img/products/image_2024031213389.jpg', 'storage/img/products/thumbnail_2024031314.jpg', '2024-03-12 11:36:28', '2024-03-12 11:50:00'),
-(90, 1, 'Roses only bouquets L10', 'Roses only bouquets with various colors and sizes are available.', 3000, 'storage/img/products/image_2024031213380.jpg', 'storage/img/products/thumbnail_20240313889.jpg', '2024-03-12 11:37:56', '2024-03-12 11:46:34'),
-(91, 1, 'Roses only bouquets L20', 'Roses only bouquets with various colors and sizes are available.', 5000, 'storage/img/products/image_2024031213395.jpg', 'storage/img/products/thumbnail_20240313932.jpg', '2024-03-12 11:38:45', '2024-03-12 11:45:42'),
-(92, 1, 'Roses only bouquets L40', 'Roses only bouquets with various colors and sizes are available.', 9000, 'storage/img/products/image_2024031213408.jpg', 'storage/img/products/thumbnail_2024031351.jpg', '2024-03-12 11:40:01', '2024-03-12 11:45:14'),
-(93, 1, 'Roses only bouquets L30', 'Roses only bouquets with various colors and sizes are available.', 7000, 'storage/img/products/image_2024031213965.jpg', 'storage/img/products/thumbnail_20240313216.jpg', '2024-03-12 11:40:47', '2024-03-12 11:43:30'),
-(94, 1, 'Roses only bouquets L50', 'Roses only bouquets with various colors and sizes are available.', 11000, 'storage/img/products/image_2024031213371.jpg', 'storage/img/products/thumbnail_20240313113.jpg', '2024-03-12 11:41:47', '2024-03-12 11:42:55'),
-(95, 1, 'Roses only bouquets M100', 'Roses only bouquets with various colors and sizes are available.', 21000, 'storage/img/products/image_2024031213835.jpg', 'storage/img/products/thumbnail_20240313128.jpg', '2024-03-12 11:56:51', '2024-03-12 11:56:51');
+INSERT INTO `products` (`id`, `user_id`, `name`, `description`, `price`, `image`, `thumbnail`, `priority`, `created_at`, `updated_at`) VALUES
+(51, 1, 'M10 Mixed Bouquets', '10 medium size roses bouquet of length 40-45cm and width 30cm.', 2500, 'storage/img/products/image_20240312080.jpg', 'storage/img/products/thumbnail_2024031208149.jpg', 4, '2023-12-15 15:07:22', '2024-03-20 14:45:29'),
+(52, 1, 'L10 Protea Pincushion Bouquets', '10 large stem of  Protea Pincushion flowers.', 2500, 'storage/img/products/image_2024031210820.jpg', 'storage/img/products/thumbnail_2024031210285.jpg', 4, '2023-12-15 15:09:17', '2024-03-20 14:35:15'),
+(53, 1, 'S9 Oval Baskets', '9 small size arrangement in a basket with an assortment of fillers and greenery length is 25cm, width is 15cm and height is10cm.', 2800, 'storage/img/products/image_2024031209902.jpg', 'storage/img/products/thumbnail_202403120965.jpg', 2, '2023-12-15 15:10:25', '2024-03-20 14:52:26'),
+(54, 1, 'S10 Protea Pincushion Bouquets', '10 small. stems of  Protea Pincushion flowers.', 1500, 'storage/img/products/image_2024031210578.jpg', 'storage/img/products/thumbnail_2024031210215.jpg', 1, '2023-12-15 15:15:57', '2024-03-20 14:34:11'),
+(55, 1, 'L15 Protea Pincushion bouquets', '15 long stem of Protea Pincushion flowers.', 3500, 'storage/img/products/image_2024021910822.jpg', 'storage/img/products/thumbnail_2024021910320.jpg', 5, '2023-12-15 15:23:20', '2024-03-20 14:35:41'),
+(56, 1, 'M15 Protea Pincushion bouquets', '15 long stem of Protea Pincushion flowers.', 2500, 'storage/img/products/image_20240312104.jpg', 'storage/img/products/thumbnail_202403121090.jpg', 3, '2023-12-15 15:24:19', '2024-03-20 14:34:53'),
+(57, 1, 'M10 Protea Pincushion Bouquets', '20 medium stem of Protea Pincushion flowers.', 2000, 'storage/img/products/image_2024021910747.jpg', 'storage/img/products/thumbnail_2024021910465.jpg', 2, '2023-12-15 15:26:24', '2024-03-20 14:34:34'),
+(58, 1, 'M9 Oval Baskets', '9 medium size arrangement in a basket with an assortment of fillers and greenery length is 35cm, width is 20cm and height is 10cm.', 3200, 'storage/img/products/image_2024031209567.jpg', 'storage/img/products/thumbnail_202403120918.jpg', 2, '2023-12-15 15:28:09', '2024-03-20 14:53:53'),
+(61, 1, 'S10 Mixed Bouquets', '10 small size roses bouquet of length 30-35cm and width 20cm.', 2000, 'storage/img/products/image_2024021910857.jpg', 'storage/img/products/thumbnail_2024021910106.jpg', 2, '2023-12-15 18:01:44', '2024-03-20 14:43:42'),
+(63, 1, 'L13 Oval Baskets', '13 large size arrangement in a basket with an assortment of fillers and greenery length is 45cm, width is 25cm and height is15cm.', 5000, 'storage/img/products/image_2024031209409.jpg', 'storage/img/products/thumbnail_202403120960.jpg', 5, '2023-12-15 18:16:39', '2024-03-20 14:54:45'),
+(64, 1, 'L13 Round Baskets', '13 large size arrangement in a basket with an assortment of fillers and greenery diameter is 45cm and height is 15cm.', 4500, 'storage/img/products/image_202403120937.jpg', 'storage/img/products/thumbnail_2024031209401.jpg', 6, '2023-12-15 18:21:18', '2024-03-20 14:55:47'),
+(65, 1, 'S5 Mixed Bouquets', '5 small size roses bouquet of length 30-35cm and width 20cm.', 1500, 'storage/img/products/image_2024031208675.jpg', 'storage/img/products/thumbnail_202403120813.jpg', 1, '2023-12-15 18:23:30', '2024-03-20 14:43:07'),
+(66, 1, 'L10 Mixed Bouquets', '10 large size roses bouquet of length 50-55cm and width 40cm.', 3000, 'storage/img/products/image_2024031209510.jpg', 'storage/img/products/thumbnail_2024031209859.jpg', 6, '2023-12-16 08:35:33', '2024-03-20 14:47:41'),
+(67, 1, 'M5 Mixed Bouquets', '5 medium size roses bouquet of length 40-45cm and width 30cm.', 1800, 'storage/img/products/image_2024031209947.jpg', 'storage/img/products/thumbnail_2024031209395.jpg', 3, '2024-01-15 07:57:17', '2024-03-20 14:44:35'),
+(68, 1, 'M9 Round Baskets', 'Baskets M9 Round medium size arrangement in a basket with 9 roses plus an assortment of fillers and greenery.\r\nDiameter=35cm\r\nHeight = 10cm', 3000, 'storage/img/products/image_2024021910124.jpg', 'storage/img/products/thumbnail_2024021910273.jpg', 3, '2024-01-16 11:20:04', '2024-03-12 11:20:20'),
+(69, 1, 'L25 Protea Pincushion Bouquets', '25 long stem of Protea Pincushion flowers.', 5500, 'storage/img/products/image_202403121093.jpg', 'storage/img/products/thumbnail_20240310835.jpg', 7, '2024-03-12 08:33:10', '2024-03-20 14:36:24'),
+(70, 1, 'L20 Protea Pincushion Bouquets', '20 long stem of Protea Pincushion flowers.', 4500, 'storage/img/products/image_2024031210491.jpg', 'storage/img/products/thumbnail_20240310731.jpg', 6, '2024-03-12 08:37:42', '2024-03-20 14:36:08'),
+(71, 1, 'L30 Protea Pincushion Bouquets', '30 long stem of Protea Pincushion flowers.', 6500, 'storage/img/products/image_2024031211150.jpg', 'storage/img/products/thumbnail_20240311484.jpg', 8, '2024-03-12 09:01:04', '2024-03-20 14:36:51'),
+(72, 1, 'Small Round Boxed Roses', 'Round Small Boxed Roses \\n arrangement of roses.', 8500, 'storage/img/products/image_2024031211739.jpg', 'storage/img/products/thumbnail_20240311751.jpg', 1, '2024-03-12 09:09:52', '2024-03-21 08:49:44'),
+(73, 1, 'Medium Round Boxed Roses', 'Medium round box arrangement of roses.', 10500, 'storage/img/products/image_2024031211184.jpg', 'storage/img/products/thumbnail_2024031190.jpg', 2, '2024-03-12 09:11:15', '2024-03-20 14:31:16'),
+(74, 1, 'Large Round Boxed Roses', 'Large Round Boxed Roses arrangement of roses', 15000, 'storage/img/products/image_2024031211234.jpg', 'storage/img/products/thumbnail_20240311323.jpg', 3, '2024-03-12 09:12:29', '2024-03-20 14:31:35'),
+(75, 1, 'Small Heart Boxed Roses', 'Small Heart Boxed Roses arrangement of roses.', 8500, 'storage/img/products/image_2024031211936.jpg', 'storage/img/products/thumbnail_20240311938.jpg', 4, '2024-03-12 09:13:48', '2024-03-12 10:56:39'),
+(76, 1, 'Medium Heart Boxed Roses', 'Medium Heart Boxed Roses arrangement of roses.', 10500, 'storage/img/products/image_2024031211529.jpg', 'storage/img/products/thumbnail_20240311561.jpg', 5, '2024-03-12 09:16:28', '2024-03-12 10:57:18'),
+(77, 1, 'Large Heart Boxed Roses', 'Large Heart Boxed Roses arrangement of roses.', 15000, 'storage/img/products/image_2024031211351.jpg', 'storage/img/products/thumbnail_20240311132.jpg', 6, '2024-03-12 09:20:52', '2024-03-12 10:54:11'),
+(78, 1, 'Small Square Boxed Roses', 'Small Square Boxed Roses arrangement of roses.', 8500, 'storage/img/products/image_2024031211465.jpg', 'storage/img/products/thumbnail_20240311210.jpg', 7, '2024-03-12 09:25:08', '2024-03-12 10:53:37'),
+(79, 1, 'Medium Square Boxed Roses', 'Medium Square Boxed Roses arrangement of roses.', 10500, 'storage/img/products/image_2024031211559.jpg', 'storage/img/products/thumbnail_20240311185.jpg', 8, '2024-03-12 09:26:39', '2024-03-12 10:53:04'),
+(80, 1, 'Large Square Boxed Roses', 'Large Square Boxed Roses arrangement of roses.', 15000, 'storage/img/products/image_2024031211866.jpg', 'storage/img/products/thumbnail_2024031116.jpg', 9, '2024-03-12 09:27:53', '2024-03-12 10:52:29'),
+(81, 1, 'M10 Roses only Bouquets', '10 medium roses only bouquets various colors and sizes are available.', 2500, 'storage/img/products/image_202403121379.jpg', 'storage/img/products/thumbnail_20240313158.jpg', 4, '2024-03-12 11:26:21', '2024-03-20 15:01:38'),
+(82, 1, 'S20 Roses only bouquets', '20 small roses only bouquets various colors and sizes are available.', 3000, 'storage/img/products/image_202403121364.jpg', 'storage/img/products/thumbnail_2024031213843.jpg', 2, '2024-03-12 11:28:07', '2024-03-20 15:00:54'),
+(83, 1, 'S30 Roses only bouquets', '30 small roses only bouquets various colors and sizes are available.', 4200, 'storage/img/products/image_2024031213272.jpg', 'storage/img/products/thumbnail_20240313217.jpg', 3, '2024-03-12 11:29:15', '2024-03-20 15:01:14'),
+(84, 1, 'S10 Roses only bouquets', '10 small roses only bouquets various colors and sizes are available.', 2000, 'storage/img/products/image_2024031213466.jpg', 'storage/img/products/thumbnail_2024031213440.jpg', 1, '2024-03-12 11:29:54', '2024-03-20 15:00:37'),
+(86, 1, 'M20 Roses only bouquets', '20 medium roses only bouquets various colors and sizes are available.', 4000, 'storage/img/products/image_2024031213627.jpg', 'storage/img/products/thumbnail_20240313964.jpg', 5, '2024-03-12 11:33:08', '2024-03-20 15:02:02'),
+(87, 1, 'M30 Roses only bouquets', '30 medium roses only bouquets various colors and sizes are available.', 5500, 'storage/img/products/image_2024031213565.jpg', 'storage/img/products/thumbnail_20240313167.jpg', 6, '2024-03-12 11:34:00', '2024-03-20 15:02:32'),
+(88, 1, 'M40 Roses only bouquets', '40 medium roses only bouquets various colors and sizes are available.', 7000, 'storage/img/products/image_2024031213868.jpg', 'storage/img/products/thumbnail_20240313484.jpg', 7, '2024-03-12 11:35:21', '2024-03-20 15:02:48'),
+(89, 1, 'M50 Roses only bouquets', '50 medium roses only bouquets various colors and sizes are available.', 8600, 'storage/img/products/image_2024031213389.jpg', 'storage/img/products/thumbnail_2024031314.jpg', 8, '2024-03-12 11:36:28', '2024-03-20 15:03:08'),
+(90, 1, 'L10 Roses only bouquets', '10 large roses only bouquets various colors and sizes are available.', 3000, 'storage/img/products/image_2024031213380.jpg', 'storage/img/products/thumbnail_20240313889.jpg', 10, '2024-03-12 11:37:56', '2024-03-20 15:03:48'),
+(91, 1, 'L20 Roses only bouquets', '20 large roses only bouquets various colors and sizes are available.', 5000, 'storage/img/products/image_2024031213395.jpg', 'storage/img/products/thumbnail_20240313932.jpg', 11, '2024-03-12 11:38:45', '2024-03-20 15:04:06'),
+(92, 1, 'L40 Roses only bouquets', '40 large roses only bouquets various colors and sizes are available.', 9000, 'storage/img/products/image_2024031213408.jpg', 'storage/img/products/thumbnail_2024031351.jpg', 13, '2024-03-12 11:40:01', '2024-03-20 15:04:52'),
+(93, 1, 'L30 Roses only bouquets', '30 large roses only bouquets various colors and sizes are available.', 7000, 'storage/img/products/image_2024031213965.jpg', 'storage/img/products/thumbnail_20240313216.jpg', 12, '2024-03-12 11:40:47', '2024-03-20 15:04:37'),
+(94, 1, 'L50 Roses only bouquets', '50 large roses only bouquets various colors and sizes are available.', 11000, 'storage/img/products/image_2024031213371.jpg', 'storage/img/products/thumbnail_20240313113.jpg', 14, '2024-03-12 11:41:47', '2024-03-20 15:05:22'),
+(95, 1, 'L100 Roses only bouquets', '100 large roses only bouquets various colors and sizes are available.', 21000, 'storage/img/products/image_2024031213835.jpg', 'storage/img/products/thumbnail_20240313128.jpg', 15, '2024-03-12 11:56:51', '2024-03-20 15:06:12'),
+(99, 1, 'M100 Roses Only Bouquets', '100 medium roses only bouquets various colors and sizes are available.', 16500, 'storage/img/products/image_2024032016281.jpg', 'storage/img/products/thumbnail_20240316170.jpg', 9, '2024-03-20 14:04:44', '2024-03-20 15:03:30'),
+(100, 1, 'S9 Round Basket', '9 small size arrangement in a basket with an assortment of fillers and greenery.', 2500, 'storage/img/products/image_2024032016811.jpg', 'storage/img/products/thumbnail_202403201614.jpg', 1, '2024-03-20 14:07:51', '2024-03-20 14:50:43'),
+(101, 1, 'L5 Mixed Bouquets', '5 large size roses bouquet of length 50-55cm and width 40cm.', 2000, 'storage/img/products/image_202403201690.jpg', 'storage/img/products/thumbnail_20240316609.jpg', 5, '2024-03-20 14:11:57', '2024-03-20 14:46:25');
 
 -- --------------------------------------------------------
 
@@ -516,10 +539,7 @@ INSERT INTO `product_categories` (`id`, `user_id`, `product_id`, `category_id`, 
 (13, 1, 64, 4, '2024-01-18 07:14:52', '2024-01-18 07:14:52'),
 (15, 1, 53, 4, '2024-01-18 07:15:23', '2024-01-18 07:15:23'),
 (16, 1, 63, 4, '2024-01-18 07:17:10', '2024-01-18 07:17:10'),
-(17, 1, 54, 3, '2024-01-18 07:17:49', '2024-01-18 07:17:49'),
 (21, 1, 58, 4, '2024-01-18 07:20:09', '2024-01-18 07:20:09'),
-(22, 1, 57, 3, '2024-01-18 07:20:53', '2024-01-18 07:20:53'),
-(23, 1, 57, 4, '2024-01-18 07:20:53', '2024-01-18 07:20:53'),
 (30, 1, 69, 2, '2024-03-12 08:33:52', '2024-03-12 08:33:52'),
 (31, 1, 77, 5, '2024-03-12 09:35:25', '2024-03-12 09:35:25'),
 (32, 1, 80, 5, '2024-03-12 09:36:04', '2024-03-12 09:36:04'),
@@ -544,7 +564,6 @@ INSERT INTO `product_categories` (`id`, `user_id`, `product_id`, `category_id`, 
 (54, 1, 88, 6, '2024-03-12 11:57:28', '2024-03-12 11:57:28'),
 (55, 1, 84, 6, '2024-03-12 11:57:44', '2024-03-12 11:57:44'),
 (56, 1, 90, 6, '2024-03-12 11:57:58', '2024-03-12 11:57:58'),
-(57, 1, 85, 6, '2024-03-12 11:58:20', '2024-03-12 11:58:20'),
 (58, 1, 86, 6, '2024-03-12 11:59:38', '2024-03-12 11:59:38'),
 (59, 1, 91, 6, '2024-03-12 11:59:52', '2024-03-12 11:59:52'),
 (60, 1, 92, 6, '2024-03-12 12:00:06', '2024-03-12 12:00:06'),
@@ -556,7 +575,21 @@ INSERT INTO `product_categories` (`id`, `user_id`, `product_id`, `category_id`, 
 (66, 1, 72, 7, '2024-03-12 12:18:22', '2024-03-12 12:18:22'),
 (67, 1, 71, 7, '2024-03-12 12:19:18', '2024-03-12 12:19:18'),
 (68, 1, 75, 7, '2024-03-12 12:19:59', '2024-03-12 12:19:59'),
-(69, 1, 61, 7, '2024-03-12 12:20:54', '2024-03-12 12:20:54');
+(69, 1, 61, 7, '2024-03-12 12:20:54', '2024-03-12 12:20:54'),
+(70, 1, 94, 6, '2024-03-20 11:30:09', '2024-03-20 11:30:09'),
+(71, 1, 95, 8, '2024-03-20 13:35:26', '2024-03-20 13:35:26'),
+(72, 1, 80, 8, '2024-03-20 13:35:50', '2024-03-20 13:35:50'),
+(73, 1, 54, 2, '2024-03-20 13:53:41', '2024-03-20 13:53:41'),
+(74, 1, 100, 4, '2024-03-20 14:56:37', '2024-03-20 14:56:37'),
+(75, 1, 100, 7, '2024-03-20 14:56:37', '2024-03-20 14:56:37'),
+(76, 1, 100, 8, '2024-03-20 14:56:37', '2024-03-20 14:56:37'),
+(77, 1, 57, 2, '2024-03-20 15:08:22', '2024-03-20 15:08:22'),
+(78, 1, 65, 7, '2024-03-20 15:09:05', '2024-03-20 15:09:05'),
+(79, 1, 57, 7, '2024-03-20 15:09:44', '2024-03-20 15:09:44'),
+(80, 1, 101, 3, '2024-03-21 09:57:01', '2024-03-21 09:57:01'),
+(81, 1, 55, 8, '2024-03-21 09:57:36', '2024-03-21 09:57:36'),
+(82, 1, 73, 8, '2024-03-21 09:57:51', '2024-03-21 09:57:51'),
+(83, 1, 68, 8, '2024-03-21 09:59:45', '2024-03-21 09:59:45');
 
 -- --------------------------------------------------------
 
@@ -666,7 +699,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `role_id`, `first_name`, `last_name`, `email`, `phone`, `password`, `code`, `address`, `city`, `country`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Mark Chovava', 1, 'Mark', 'Chovava', 'markchovava@gmail.com', '+263782210021', '$2y$12$OVnjtrqUeiwV5tyyLiEYseYy9zN9wpXhyxYIqi64z2AssMXEyzF2K', '12345678', '14949  Tynwald South, Harare, Zimbabwe', 'Harare', 'Zimbabwe', NULL, NULL, '2024-01-17 09:42:03', '2024-01-26 06:57:54'),
 (2, 'Joe Cho', 5, 'Joe', 'Cho', 'joe@email.com', '12345678', '$2y$12$Y6J7yh0pgMb9eJ8qbPHs1.9KhaShzY0XDbkNOGPNcMXKqbGxV27PO', '781199366242', '18 Cleveland Rd., Milton Park, Harare', 'Harare', 'Zimbabwe', NULL, NULL, '2024-01-26 07:28:20', '2024-01-26 08:36:24'),
-(3, 'Reb Cho', 4, 'Reb', 'Cho', 'reb@email.com', '12343221', '$2y$12$K/pEx5U6t.WYFkshMFO/euqJYjCe/4MemPtvgohPuw0OGE/YVNcW6', '102951106859', '14949  Tynwald South, Harare, Zimbabwe', 'Harare', 'Zimbabwe', NULL, NULL, '2024-01-26 07:29:00', '2024-01-30 08:07:16');
+(3, 'Reb Cho', 4, 'Reb', 'Cho', 'reb@email.com', '12343221', '$2y$12$K/pEx5U6t.WYFkshMFO/euqJYjCe/4MemPtvgohPuw0OGE/YVNcW6', '102951106859', '14949  Tynwald South, Harare, Zimbabwe', 'Harare', 'Zimbabwe', NULL, NULL, '2024-01-26 07:29:00', '2024-01-30 08:07:16'),
+(5, NULL, 3, NULL, NULL, 'admin@email.com', NULL, '$2y$12$ku8SlqI4awBgcpYweIU8VeGSv/7SvkJ3DOMDQ6o5aZdRIzSCkbeoa', '12345678', NULL, NULL, NULL, NULL, NULL, '2024-03-21 10:45:11', '2024-03-21 10:45:11');
 
 --
 -- Indexes for dumped tables
@@ -810,13 +844,13 @@ ALTER TABLE `app_infos`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `cart_item_options`
@@ -828,7 +862,7 @@ ALTER TABLE `cart_item_options`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `deliveries`
@@ -852,19 +886,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `order_users`
 --
 ALTER TABLE `order_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -882,13 +916,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `product_categories`
 --
 ALTER TABLE `product_categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `product_extras`
@@ -912,7 +946,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
