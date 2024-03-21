@@ -15,6 +15,7 @@ class Product extends Model
         'description',
         'price', 
         'image',
+        'priority',
         'thumbnail',
         'created_at',
         'updated_at',

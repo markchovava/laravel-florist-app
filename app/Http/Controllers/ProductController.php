@@ -18,10 +18,11 @@ class ProductController extends Controller
         if(!empty($request->search)){
             $data = Product::with(['user', 'categories'])
                 ->where('name', 'LIKE', '%' . $request->search . '%')
-                ->paginate(12);
+                ->orderBy('priority','asc')
+                ->paginate(20);
         } else {
             $data = Product::with(['user', 'categories'])
-                ->orderBy('updated_at','desc')
+                ->orderBy('priority','asc')
                 ->orderBy('name','asc')
                 ->paginate(12);
         }
@@ -31,7 +32,7 @@ class ProductController extends Controller
 
     public function indexFour(){
         $data = Product::with(['user', 'categories'])
-                ->orderBy('updated_at','desc')
+                ->orderBy('priority','desc')
                 ->orderBy('name','asc')
                 ->paginate(4);
        
@@ -51,6 +52,7 @@ class ProductController extends Controller
         $data->user_id = Auth::user()->id;
         $data->name = $request->name;
         $data->description = $request->description;
+        $data->priority = $request->priority;
         $data->price = (int)$request->price;
         $data->created_at = now();
         $data->updated_at = now();
@@ -85,6 +87,7 @@ class ProductController extends Controller
         $data->name = $request->name;
         $data->user_id = Auth::user()->id;
         $data->description = $request->description;
+        $data->priority = $request->priority;
         $data->price = $request->price;
         $data->updated_at = now();
         if( $request->hasFile('image') ){

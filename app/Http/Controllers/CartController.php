@@ -157,13 +157,21 @@ class CartController extends Controller
     }
 
     public function cartCheckout(Request $request){
-        $cart = Cart::where('shopping_session', $request->shopping_session)->first();
-        //$cartitems = CartItem::where('cart_id', $cart->id)->get();
+        if($request->shopping_session){
+            $cart = Cart::where('shopping_session', $request->shopping_session)->first();
+            $cartitems = CartItem::where('cart_id', $cart->id)->get();
+            return response()->json([
+                'cart' => new CartResource($cart),
+                'cartitems' => CartItemResource::collection($cartitems),
+            ]);
+
+        }
 
         return response()->json([
-            'cart' => new CartResource($cart),
-            //'cartitems' => CartItemResource::collection($cartitems),
+            'cart' => 'Is Empty',
+            'cartitems' => 'Is Empty',
         ]);
+
     }
  
     

@@ -47,13 +47,24 @@ Route::prefix('product-category')->group(function() {
     Route::get('/{id}', [ProductCategoryController::class, 'show']);
 });
 
+Route::get('/category/top-selling', [CategoryController::class, 'topSellingProducts']); 
+Route::get('/category/top-selling-four', [CategoryController::class, 'topSellingFour']); 
+Route::get('/category/featured', [CategoryController::class, 'featuredProducts']); 
+
 Route::prefix('category')->group(function() {
     Route::get('/', [CategoryController::class, 'index']);
     Route::get('/all', [CategoryController::class, 'indexAll']);
     Route::get('/one', [CategoryController::class, 'indexOne']);
     Route::get('/two', [CategoryController::class, 'indexPriorityTwo']);
     Route::get('/{id}', [CategoryController::class, 'show']);
-    Route::get('/products/{id}', [CategoryController::class, 'showCategoryProducts']);
+    Route::get('/products/{id}', [CategoryController::class, 'showCategoryProducts']); // Category Products
+    Route::get('/products-search/{id}', [CategoryController::class, 'searchCategoryProducts']); // SearchCategory Products
+
+});
+
+Route::prefix('delivery')->group(function() {
+    Route::get('/', [DeliveryController::class, 'index']);
+    Route::get('/{id}', [DeliveryController::class, 'show']);
 });
 
 Route::prefix('product')->group(function() {
