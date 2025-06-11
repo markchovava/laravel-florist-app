@@ -43,8 +43,7 @@ class ProductCategoryController extends Controller
         $data = ProductCategory::with(['category'])
                 ->where('product_id', $id)
                 ->get();
-        
-        
+    
         return ProductCategoryResource::collection($data);
     }
 

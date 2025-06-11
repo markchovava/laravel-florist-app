@@ -167,7 +167,7 @@ class OrderController extends Controller
         $order->delivery_name = $cart['delivery_name'];
         $order->delivery_price = $cart['delivery_price'];
         $order->delivery_status = 'Processing';
-        $order->order_quantity = $cart['cart_quantity'];
+        $order->order_quantity = (int)$order->product_quantity + (int)$order->extra_quantity;
         $order->order_total = $cart['cart_total'];
         $order->created_at = now();
         $order->updated_at = now();

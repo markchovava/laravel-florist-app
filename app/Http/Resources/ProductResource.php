@@ -23,10 +23,10 @@ class ProductResource extends JsonResource
             'priority' => $this->priority,
             'image' => $this->image,
             'thumbnail' => $this->thumbnail,
-            'created_at' => $this->created_at->format('d M Y H:i a'),
-            'updated_at' => $this->updated_at->format('d M Y H:i a'),
             'categories' => CategoryResource::collection(($this->whenLoaded('categories'))),
             'user' => new UserResource($this->whenLoaded('user')),
+            'created_at' => $this->created_at->format('d M Y H:i a'),
+            'updated_at' => $this->updated_at->format('d M Y H:i a'),
         ];
     }
 }

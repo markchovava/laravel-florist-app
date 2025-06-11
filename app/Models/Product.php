@@ -31,10 +31,10 @@ class Product extends Model
     }
 
     public function order_item(){
-        return $this->hasOne(OrderItem::class, 'user_id', 'id');   
+        return $this->hasOne(OrderItem::class, 'product_id', 'id');   
     }
 
     public function cart_item(){
-        return $this->hasOne(CartItem::class, 'user_id', 'id');   
+        return $this->hasOne(CartItem::class, 'product_id', 'id');   
     }
 }

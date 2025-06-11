@@ -26,7 +26,7 @@ class DeliveryController extends Controller
     }
 
     public function indexAll(){
-        $data = Delivery::get(); 
+        $data = Delivery::all(); 
         return DeliveryResource::collection($data);
     }
 

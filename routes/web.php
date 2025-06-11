@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductExtraController;
@@ -31,6 +32,8 @@ Route::get('/', function () {
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/check-email', [AuthController::class, 'checkEmail']);
+
+Route::get('/send-mail', [MailController::class, 'sendContactFormEmail']); 
 
 
 Route::prefix('app-info')->group(function() {
@@ -93,9 +96,9 @@ Route::prefix('cart-item')->group(function() {
     Route::delete('/{id}', [CartItemController::class, 'delete']);
 });
 
+Route::get('/delivery/all', [DeliveryController::class, 'indexAll']);
 Route::prefix('delivery')->group(function() {
     Route::get('/', [DeliveryController::class, 'index']);
-    Route::get('/all', [DeliveryController::class, 'indexAll']);
     Route::delete('/{id}', [DeliveryController::class, 'show']);
 });
 
